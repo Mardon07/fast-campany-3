@@ -1,6 +1,7 @@
 import React from "react";
 import Bookmark from "./bookmark";
 import PropTypes from "prop-types";
+// import { professions } from "../api/fake.api/professions.api";
 function Qualitie({ user, onDecrement, onBookMark }) {
     return (
         <>

@@ -1,10 +1,13 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Users from "./component/users";
 import API from "./api";
-import SearchStatus from "./component/searchStatus";
 
 function App() {
-    const [users, setUsers] = useState(API.users.fetchAll());
+    const [users, setUsers] = useState([]);
+    useEffect(() => {
+        API.users.fetchAll().then((data) => setUsers(data));
+    }, []);
+
     const handlDecrement = (id) => {
         setUsers((prevState) => prevState.filter((tag) => tag !== id));
     };
@@ -25,7 +28,6 @@ function App() {
 
     return (
         <>
-            <SearchStatus length={users.length} />
             <Users
                 users={users}
                 onDecrement={handlDecrement}
