@@ -52,15 +52,14 @@ const Users = () => {
         setSortBy(item);
     };
 
-    const handleProfessionSelect = (item) => {
-        setSelectedProf(item);
-    };
     const handleChangeSearch = ({ target }) => {
+        if (selectedProf !== false) setSelectedProf();
         setSearchValue(target.value);
     };
-    useEffect(() => {
-        setSelectedProf();
-    }, [searchValue]);
+    const handleProfessionSelect = (item) => {
+        if (searchValue !== "") setSearchValue("");
+        setSelectedProf(item);
+    };
 
     if (users) {
         const filterUsers = searchValue
