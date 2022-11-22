@@ -12,6 +12,7 @@ const Users = () => {
     const [professions, setProfessions] = useState();
     const [selectedProf, setSelectedProf] = useState();
     const [sortBy, setSortBy] = useState([]);
+    const [searchValue, setSearchValue] = useState();
 
     const pageSize = 8;
 
@@ -54,10 +55,22 @@ const Users = () => {
     const handleProfessionSelect = (item) => {
         setSelectedProf(item);
     };
+    const handleChangeSearch = ({ target }) => {
+        setSearchValue(target.value);
+    };
+    useEffect(() => {
+        setSelectedProf();
+    }, [searchValue]);
+
     if (users) {
-        const filterUsers = selectedProf
-            ? users.filter((user) => user.profession._id === selectedProf._id)
-            : users;
+        const filterUsers = searchValue
+            ? users.filter((user) =>
+                user.name.toLowerCase().includes(searchValue.toLowerCase())
+            )
+            : selectedProf
+                ? users.filter((user) => user.profession._id === selectedProf._id)
+                : users;
+
         const count = filterUsers.length;
         const sortedUsers = _.orderBy(
             filterUsers,
@@ -65,9 +78,11 @@ const Users = () => {
             [sortBy.order]
         );
         const userCrop = paginate(sortedUsers, currentPage, pageSize);
+
         const clearFilter = () => {
             setSelectedProf();
         };
+
         return (
             <>
                 <div className="d-flex">
@@ -88,7 +103,16 @@ const Users = () => {
                     )}
                     <div className="d-flex flex-column">
                         <SearchStatus length={count} />
-
+                        <div>
+                            <input
+                                className="form-control "
+                                type="text"
+                                name="search"
+                                placeholder="Search..."
+                                value={searchValue}
+                                onChange={handleChangeSearch}
+                            />
+                        </div>
                         {count > 0 && (
                             <UsersTable
                                 users={userCrop}

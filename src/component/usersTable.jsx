@@ -9,8 +9,7 @@ const UsersTable = ({
     onSort,
     selectedSort,
     onBookMark,
-    onDecrement,
-    ...rest
+    onDecrement
 }) => {
     const columns = {
         name: { path: "name", name: "Имя" },
