@@ -20,7 +20,8 @@ function TextField({ label, type, name, value, onChange, error }) {
                     type={showPassword ? "text" : type}
                     id={name}
                     name={name}
-                    value={value}
+                    // value={}
+                    defaultValue={value}
                     onChange={handleChange}
                     className={getInputClasses()}
                 />

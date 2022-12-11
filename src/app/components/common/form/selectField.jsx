@@ -7,6 +7,7 @@ const SelectField = ({
     name,
     onChange,
     defaultOption,
+    defaultValue,
     options,
     error
 }) => {
@@ -23,6 +24,10 @@ const SelectField = ({
                   value: options[optionsName]._id
               }))
             : options;
+    const defaultOptionValue = {
+        value: value._id,
+        label: value.name
+    };
 
     return (
         <div className="mb-4">
@@ -36,12 +41,16 @@ const SelectField = ({
                 value={value}
                 onChange={handleChange}
             >
-                <option disabled value="">
-                    {defaultOption}
+                <option value={defaultOptionValue.value}>
+                    {defaultOptionValue.label}
                 </option>
                 {optionsArray &&
                     optionsArray.map((option) => (
-                        <option key={option.value} value={option.value}>
+                        // console.log(option);
+                        <option
+                            key={option.value}
+                            value={option.value}
+                        >
                             {option.name}
                         </option>
                     ))}
@@ -52,8 +61,9 @@ const SelectField = ({
 };
 SelectField.propTypes = {
     label: PropTypes.string,
-    value: PropTypes.object,
+    value: PropTypes.oneOfType([PropTypes.object, PropTypes.string]),
     onChange: PropTypes.func,
+    defaultValue: PropTypes.object,
     error: PropTypes.string,
     name: PropTypes.string,
     defaultOption: PropTypes.string,

@@ -6,6 +6,7 @@ import SelectField from "./selectField";
 import RadioField from "./radioField";
 import MultiSelectField from "./multiSelectField";
 import { useParams, useHistory } from "react-router-dom";
+
 const Edit = () => {
     const params = useParams();
     const history = useHistory();
@@ -27,10 +28,13 @@ const Edit = () => {
             [target.name]: target.value
         }));
     };
+
     const handleClick = () => {
         history.push(`/users/${userId}`);
+
         api.users.update(userId, data);
     };
+
     const validatorConfig = {
         email: {
             isRequired: {
@@ -59,14 +63,44 @@ const Edit = () => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        console.log(e.target);
     };
+    const newDate = data;
+    if (professions) {
+        const newProf =
+            typeof data.profession === "string" &&
+            Object.values(professions).filter(
+                (profession) => data.profession === profession._id
+            );
+        const newQualities = Object.values(data.qualities).map((qual) =>
+            !qual.name
+                ? {
+                      name: qual.label,
+                      _id: qual.value,
+                      color: qual.color
+                  }
+                : qual
+        );
+        console.log(newQualities);
+        delete newDate.qualities;
+        newDate.qualities = newQualities;
+        console.log(newDate);
+        if (newProf) {
+            newDate.profession = Object.assign({}, ...newProf);
+        }
+    }
+
     return (
         data && (
             <div className="container mt-5">
                 <div className="row">
                     <div className="col-md-6 offset-md-3 shadow p-4">
                         <form onSubmit={handleSubmit}>
+                            <TextField
+                                label="Напишите свою имю"
+                                name="name"
+                                value={data.name}
+                                onChange={handleChange}
+                            />
                             <TextField
                                 label="Электронная почта"
                                 name="email"
@@ -78,7 +112,6 @@ const Edit = () => {
                             <SelectField
                                 label="Выберите вашу профессию"
                                 options={professions}
-                                defaultOption="Choose..."
                                 onChange={handleChange}
                                 value={data.profession}
                                 name="profession"

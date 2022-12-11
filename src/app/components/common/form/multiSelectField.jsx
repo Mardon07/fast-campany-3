@@ -16,7 +16,8 @@ const MultiSelectField = ({ options, onChange, name, label, defaultValue }) => {
     };
     const optionsDefaulValue = defaultValue.map((value) => ({
         label: value.name,
-        value: value._id
+        value: value._id,
+        color: value.color
     }));
     // console.log(defaultValue);
     return (
