@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
-import TextField from "./textField";
+import TextField from "../../common/form/textField";
 import { validator } from "../../../utils/validator";
 import api from "../../../api";
-import SelectField from "./selectField";
-import RadioField from "./radioField";
-import MultiSelectField from "./multiSelectField";
+import SelectField from "../../common/form/selectField";
+import RadioField from "../../common/form/radioField";
+import MultiSelectField from "../../common/form/multiSelectField";
 import { useParams, useHistory } from "react-router-dom";
 
 const Edit = () => {
@@ -17,7 +17,7 @@ const Edit = () => {
     const [errors, setErrors] = useState({});
     const [professions, setProfession] = useState();
     useEffect(() => {
-        api.users.getById(userId).then((da) => setData(da));
+        api.users.getById(userId).then((data) => setData(data));
         api.professions.fetchAll().then((data) => setProfession(data));
         api.qualities.fetchAll().then((data) => setQualities(data));
     }, []);
@@ -80,10 +80,9 @@ const Edit = () => {
                   }
                 : qual
         );
-        console.log(newQualities);
+
         delete newDate.qualities;
         newDate.qualities = newQualities;
-        console.log(newDate);
         if (newProf) {
             newDate.profession = Object.assign({}, ...newProf);
         }

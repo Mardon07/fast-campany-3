@@ -77,9 +77,6 @@ const RegisterForm = () => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-    //     const isValid = validate();
-    //     if (!isValid) return;
-    //     console.log(data);
     };
     return (
         <form onSubmit={handleSubmit}>

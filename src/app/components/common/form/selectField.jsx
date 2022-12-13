@@ -46,7 +46,6 @@ const SelectField = ({
                 </option>
                 {optionsArray &&
                     optionsArray.map((option) => (
-                        // console.log(option);
                         <option
                             key={option.value}
                             value={option.value}
